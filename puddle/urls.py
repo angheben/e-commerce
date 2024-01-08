@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings  # Import settings
 from django.conf.urls.static import static  # Import static
 
@@ -7,6 +7,7 @@ from core.views import IndexView, ContactView
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # Admin path
+    path('items', include('item.urls')),
     path("", IndexView.as_view(), name="index"),
     path("contact/", ContactView.as_view(), name="contact"),
     # Other URL patterns
