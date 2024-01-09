@@ -3,8 +3,8 @@
 {% block title %} {{ item.name }} {% endblock %}
 
 {% block content%}
-<div class="mt-8 px-6 py-12 bg-gray-100 rounded-xl">
-  <div class="col-span-3">
+<div class="mt-8 px-6 py-12 bg-gray-100 rounded-xl flex">
+  <div class="w-1/3">
     <img src="{{ item.large_image.large_thumb.url }}" class="rounded-xl" alt="{{ item.name }} Image">
   </div>
   <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
@@ -28,15 +28,15 @@
 <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
   <h2 class="mb-12 text-2xl text-center">Related items</h2>
   <div class="grid grid-cols-3 gap-3">
-    {% for related_item in related_items %}
+    {% for item in related_items %}
     <div>
       <a href="{% url 'item:detail' item.id %}">
         <div>
           <img src="{{ item.image.thumb.url }}" alt="Related Item Image">
         </div>
         <div class="p-6 bg-white rounded-b-xl">
-          <h2 class="text-2xl">{{ related_item.name }}</h2>
-          <p class="text-gray-500">Price: {{ related_item.price }}</p>
+          <h2 class="text-2xl">{{ item.name }}</h2>
+          <p class="text-gray-500">Price: {{ item.price }}</p>
         </div>
       </a>
     </div>

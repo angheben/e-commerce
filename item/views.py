@@ -1,7 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Item
 from django.views.generic import DetailView
-from django.shortcuts import render, get_object_or_404
+from .models import Item
 
 
 class ItemDetailView(DetailView):
@@ -9,11 +7,13 @@ class ItemDetailView(DetailView):
     template_name = 'item/detail.html'
     context_object_name = 'item'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        item = self.get_object()  # Retrieve the current item
 
-def item_list(request, pk):
-    item = get_object_or_404(Item, pk=pk)
-    related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(pk=pk)[0:3]
-    return render(request, 'item/detail.html', {
-        'item': item,
-        'related_items': related_items,
-    })
+        # Get related items
+        related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(pk=item.pk)[:3]
+
+        # Add related items to the context
+        context['related_items'] = related_items
+        return context

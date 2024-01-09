@@ -1,5 +1,6 @@
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, FormView
 from item.models import Category, Item
+from .forms import SingupForm
 
 
 class IndexView(ListView):
@@ -15,3 +16,15 @@ class IndexView(ListView):
 
 class ContactView(TemplateView):
     template_name = 'core/contact.html'
+
+
+class FormsView(FormView):
+    template_name = 'core/signup.html'
+    form_class = SingupForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form_class()
+        return context
+
+
